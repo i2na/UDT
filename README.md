@@ -1,75 +1,74 @@
-# UDT (Universal Data Translator)
+# UDT
 
-설정 파일(YAML) 하나로 다양한 프로토콜(HTTP, Modbus 등)을 연결하고, 표준 JSON으로 변환해주는 초경량 미들웨어입니다.
-
-## 1\. 설치 및 실행
-
-### 1-1. 환경 설정 및 설치
+### 1. 설치
 
 ```bash
+# Backend 설치
 cd Backend
+./install.sh
 
-python -m venv venv
-source venv/bin/activate  # Mac/Linux
-# venv\Scripts\activate   # Windows
-
-pip install -r requirements.txt
+# Frontend 설치
+cd Frontend
+yarn install
 ```
 
-### 1-2. 메인 서버 실행
+### 2. 실행
 
 ```bash
-python main.py
+# Backend 실행
+cd Backend
+pm2 start ecosystem.config.cjs
+
+# Frontend 실행
+cd Frontend
+yarn dev
 ```
 
----
+http://localhost:5173 접속
 
-## 2\. 테스트 가이드 (Swagger UI)
-
-서버 실행 후 브라우저에서 **[http://localhost:8000/docs](https://www.google.com/search?q=http://localhost:8000/docs)** 에 접속합니다.
-
-### ✅ Case A: HTTP 프로토콜 테스트
-
-외부의 공개된 API(JSONPlaceholder)를 연동하는 예제입니다.
-
-1.  **링크 생성 (`POST /create-link`)**
-    -   아래 YAML을 복사하여 `Try it out` -\> `Request body`에 입력하고 실행(Execute)합니다.
-    <!-- end list -->
-    ```yaml
-    protocol: http
-    target:
-        url: "https://jsonplaceholder.typicode.com/todos/1"
-        method: "GET"
-    ```
-2.  **데이터 조회 (`GET /fetch/{link_id}`)**
-    -   응답받은 `link_id`를 복사하여 `fetch` API에 넣고 실행하면, 외부 API의 응답 값이 JSON으로 반환됩니다.
-
----
-
-### ✅ Case B: Modbus 프로토콜 테스트 (가상 장비)
-
-실제 장비가 없으므로, 포함된 **Mock Server**를 실행하여 테스트합니다.
-
-#### 1\. 가상 장비(Mock Server) 가동
+### 중지
 
 ```bash
-python Backend/test/modbus_device.py
+pm2 stop all
+pm2 delete all
 ```
 
-#### 2\. 링크 생성 (`POST /create-link`)
+## 사용 방법
 
-Swagger UI에서 아래 YAML을 입력하여 가상 장비와 연결합니다.
+### Protocol Playground (테스트 탭)
 
-```yaml
-protocol: modbus
-target:
-    ip: "localhost"
-    port: 5020
-data_point:
-    address: 10 # 가상 장비의 10번지 값을 조회
-    count: 1
+1. 프로토콜 선택 (Modbus TCP / BACnet)
+2. 연결 정보 입력 (Host, Port, Device ID 등)
+3. 레지스터 설정 (Address, Length, Format)
+4. **Test Read** 클릭
+5. Raw 데이터 결과 확인
+
+### CSV Hosting (호스팅 탭)
+
+1. **Download Example CSV** 클릭하여 템플릿 다운로드
+2. CSV 파일을 열어 장비 정보 입력
+3. 수정한 CSV 파일 업로드
+4. 생성된 3개 API 엔드포인트 확인:
+   ```
+   GET /device/{device_id}/snapshot      # 전체 포인트 조회
+   GET /device/{device_id}/raw?alias=... # 개별 포인트 조회
+   GET /device/{device_id}/points        # 포인트 목록
+   ```
+
+## 포트 정보
+
+| 서비스         | 포트 | 설명              |
+| -------------- | ---- | ----------------- |
+| Frontend       | 5173 | React UI          |
+| Core API       | 3000 | 메인 API 서버     |
+| Modbus Adapter | 5001 | Modbus TCP 어댑터 |
+| BACnet Adapter | 5002 | BACnet 어댑터     |
+
+## 로그 확인
+
+```bash
+pm2 logs              # 전체 로그
+pm2 logs udt-core     # Core 로그만
+pm2 logs modbus-adapter
+pm2 logs bacnet-adapter
 ```
-
-#### 3\. 데이터 조회 (`GET /fetch/{link_id}`)
-
-발급받은 `link_id`로 요청을 보내면, 가상 장비(`mock_device.py`)에서 설정된 데이터 값이 JSON으로 반환됩니다.
