@@ -55,7 +55,7 @@ pm2 delete all
 4. **Send** 버튼 클릭
 5. 결과 확인
 
-### Deploy API
+### Hosting API
 
 CSV 파일로 REST API를 즉시 배포
 

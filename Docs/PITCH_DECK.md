@@ -54,7 +54,7 @@ Postman처럼 GUI로 산업용 프로토콜을 즉시 테스트
 └───────────────────────────────────────────┘
 ```
 
-#### 2.2 Deploy API
+#### 2.2 Hosting API
 
 CSV 파일 업로드 → 즉시 REST API 서버 생성
 
@@ -100,9 +100,9 @@ GET /device/{device_id}/snapshot
 
 ```json
 {
-  "boiler_temp": 65.5,
-  "room_temp": 23.2,
-  "total_power": 1250
+    "boiler_temp": 65.5,
+    "room_temp": 23.2,
+    "total_power": 1250
 }
 ```
 
@@ -116,9 +116,9 @@ GET /device/{device_id}/raw?alias=boiler_temp
 
 ```json
 {
-  "alias": "boiler_temp",
-  "value": 65.5,
-  "protocol": "modbus-tcp"
+    "alias": "boiler_temp",
+    "value": 65.5,
+    "protocol": "modbus-tcp"
 }
 ```
 
@@ -132,12 +132,12 @@ GET /device/{device_id}/points
 
 ```json
 [
-  {
-    "alias": "boiler_temp",
-    "protocol": "modbus-tcp",
-    "host": "192.168.1.100",
-    "description": "보일러온도"
-  }
+    {
+        "alias": "boiler_temp",
+        "protocol": "modbus-tcp",
+        "host": "192.168.1.100",
+        "description": "보일러온도"
+    }
 ]
 ```
 
@@ -165,7 +165,7 @@ GET /device/{device_id}/points
 ```javascript
 // 단 3줄로 완성
 const response = await fetch("https://api.udt.io/device/abc123/snapshot", {
-  headers: { Authorization: `Bearer ${API_KEY}` },
+    headers: { Authorization: `Bearer ${API_KEY}` },
 });
 const data = await response.json();
 console.log(data.boiler_temp, data.room_temp, data.total_power);
