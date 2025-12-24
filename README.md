@@ -8,8 +8,6 @@ CSV 파일 업로드만으로 산업용 프로토콜을 HTTP REST API로 변환�
 
 📖 [Pitch Deck](https://github.com/i2na/UDT/blob/main/Docs/PITCH_DECK.md)
 
----
-
 ## Quick Start
 
 ### Installation
@@ -45,8 +43,6 @@ pm2 stop all
 pm2 delete all
 ```
 
----
-
 ## Usage
 
 ### Protocol Playground
@@ -74,8 +70,6 @@ GET /device/{device_id}/raw?alias=...  # 개별 포인트 조회
 GET /device/{device_id}/points         # 포인트 목록
 ```
 
----
-
 ## Architecture
 
 | Service        | Port | Description       |
@@ -84,8 +78,6 @@ GET /device/{device_id}/points         # 포인트 목록
 | Core API       | 3000 | Main API Server   |
 | Modbus Adapter | 5001 | Modbus TCP Reader |
 | BACnet Adapter | 5002 | BACnet Reader     |
-
----
 
 ## Commands
 
