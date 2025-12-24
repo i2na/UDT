@@ -1,7 +1,7 @@
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { MdContentCopy } from "react-icons/md";
-import "../styles/HostingSection.scss";
+import "../styles/ProxySection.scss";
 
 interface EndpointItemProps {
     label: string;
@@ -32,7 +32,7 @@ function EndpointItem({ label, value, showCopyButton = false, onCopy }: Endpoint
     );
 }
 
-export default function HostingSection() {
+export default function ProxySection() {
     const [file, setFile] = useState<File | null>(null);
     const [endpoints, setEndpoints] = useState<any>(null);
     const [loading, setLoading] = useState(false);
@@ -77,9 +77,9 @@ export default function HostingSection() {
     };
 
     return (
-        <div className="hosting-section">
+        <div className="proxy-section">
             <Toaster position="bottom-right" />
-            <h2>Hosting API</h2>
+            <h2>Proxy API</h2>
 
             <div className="download-section">
                 <p>Download sample CSV template and fill it with your device configuration</p>
@@ -136,3 +136,4 @@ export default function HostingSection() {
         </div>
     );
 }
+

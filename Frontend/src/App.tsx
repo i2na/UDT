@@ -1,10 +1,10 @@
 import { useState } from "react";
 import TestSection from "./components/TestSection";
-import HostingSection from "./components/HostingSection";
+import ProxySection from "./components/ProxySection";
 import "./styles/App.scss";
 
 export default function App() {
-    const [activeTab, setActiveTab] = useState<"test" | "hosting">("test");
+    const [activeTab, setActiveTab] = useState<"test" | "proxy">("test");
 
     return (
         <div className="app">
@@ -21,15 +21,15 @@ export default function App() {
                     Protocol Playground
                 </button>
                 <button
-                    className={activeTab === "hosting" ? "active" : ""}
-                    onClick={() => setActiveTab("hosting")}
+                    className={activeTab === "proxy" ? "active" : ""}
+                    onClick={() => setActiveTab("proxy")}
                 >
-                    Hosting API
+                    Proxy API
                 </button>
             </nav>
 
             <main className="main">
-                {activeTab === "test" ? <TestSection /> : <HostingSection />}
+                {activeTab === "test" ? <TestSection /> : <ProxySection />}
             </main>
         </div>
     );

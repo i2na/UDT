@@ -1,10 +1,20 @@
 # PITCH DECK
 
-## Universal Data Translator (UDT)
+> 산업용 프로토콜(Modbus, BACnet 등)을 HTTP REST API로 변환 및 배포해주는 프록시 호스팅 서비스
 
-> CSV 파일 업로드만으로 산업용 프로토콜(Modbus, BACnet 등)을 HTTP REST API로 변환하는 프록시 호스팅 서비스
+**핵심 가치**: "Postman처럼 테스트하고, CSV 하나로 프록시 서버 생성 및 배포 완료"
 
-**핵심 가치**: "Postman처럼 테스트하고, CSV 하나로 프록시 서버 배포 완료"
+## Table of Contents
+
+1. [Problem Statement](#1-problem-statement)
+2. [Solution](#2-solution)
+3. [API Endpoints](#3-api-endpoints)
+4. [Use Case](#4-use-case)
+5. [Competitive Advantage](#5-competitive-advantage)
+6. [Business Model](#6-business-model)
+7. [Architecture](#7-architecture)
+8. [Security](#8-security)
+9. [Technical Stack](#9-technical-stack)
 
 ## 1. Problem Statement
 
@@ -28,10 +38,10 @@ def get_temp():
 
 **기존 방식의 한계**
 
-- 🚫 Postman으로 테스트 불가 (Modbus/BACnet ≠ HTTP)
-- 🚫 빠른 검증 불가능 (테스트용 코드 별도 작성 필요)
-- 🚫 프로젝트마다 서버 배포, 유지보수, 장애 대응 반복
-- 🚫 코드 파편화로 재사용 불가
+-   🚫 Postman으로 테스트 불가 (Modbus/BACnet ≠ HTTP)
+-   🚫 빠른 검증 불가능 (테스트용 코드 별도 작성 필요)
+-   🚫 프로젝트마다 서버 배포, 유지보수, 장애 대응 반복
+-   🚫 코드 파편화로 재사용 불가
 
 ## 2. Solution
 
@@ -46,15 +56,15 @@ Postman처럼 GUI로 산업용 프로토콜을 즉시 테스트
 │ Protocol: [Modbus TCP ▼]                 │
 │ Host: 192.168.1.100    Port: 502         │
 │ Register: 0            Length: 2         │
-│                                           │
-│              [ Send ]                     │
-│                                           │
+│                                          │
+│              [ Send ]                    │
+│                                          │
 │ ✓ Success (127ms)                        │
 │ Value: 24.5°C                            │
-└───────────────────────────────────────────┘
+└──────────────────────────────────────────┘
 ```
 
-#### 2.2 Hosting API
+#### 2.2 Proxy API
 
 CSV 파일 업로드 → 즉시 REST API 서버 생성
 
@@ -188,18 +198,18 @@ console.log(data.boiler_temp, data.room_temp, data.total_power);
 
 **1. Postman for Industrial Protocols**
 
-- 업계 최초 GUI 기반 Modbus/BACnet 테스트 도구
-- 코드 없이 즉시 검증 가능
+-   업계 최초 GUI 기반 Modbus/BACnet 테스트 도구
+-   코드 없이 즉시 검증 가능
 
 **2. Multi-Protocol Integration**
 
-- 한 CSV에 여러 프로토콜 혼용
-- 한 번의 API 호출로 모든 데이터 조회
+-   한 CSV에 여러 프로토콜 혼용
+-   한 번의 API 호출로 모든 데이터 조회
 
 **3. Rapid Development**
 
-- 기존: 개발 + 배포 + 관리
-- UDT: CSV 업로드
+-   기존: 개발 + 배포 + 관리
+-   UDT: CSV 업로드
 
 ## 6. Business Model
 
@@ -217,9 +227,9 @@ console.log(data.boiler_temp, data.room_temp, data.total_power);
 
 **Billing Metrics**
 
-- Deployments: Number of uploaded CSV configurations
-- API Requests: Total calls to snapshot, raw, and points APIs
-- Overage: Auto-suggest upgrade or switch to pay-as-you-go
+-   Deployments: Number of uploaded CSV configurations
+-   API Requests: Total calls to snapshot, raw, and points APIs
+-   Overage: Auto-suggest upgrade or switch to pay-as-you-go
 
 ### Target Customers
 
@@ -269,9 +279,9 @@ curl https://api.udt.io/device/abc123/snapshot \
 
 사용자가 직접 만료일 설정
 
-- `30d`, `60d`, `90d` - 30일, 60일, 90일
-- `1y` - 1년
-- `never` - 영구 (기본값)
+-   `30d`, `60d`, `90d` - 30일, 60일, 90일
+-   `1y` - 1년
+-   `never` - 영구 (기본값)
 
 ### IP Whitelist
 
