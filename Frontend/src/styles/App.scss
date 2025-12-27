@@ -4,49 +4,81 @@
     flex-direction: column;
 }
 
-.header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 2rem;
-    text-align: center;
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0 1.5rem;
 
-    h1 {
-        font-size: 2.5rem;
-        margin-bottom: 0.5rem;
-    }
+    .navbar-container {
+        max-width: 1200px;
+        height: 64px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
 
-    p {
-        opacity: 0.9;
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            cursor: pointer;
+            letter-spacing: -1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+
+            button {
+                padding: 0.5rem 1rem;
+                border-radius: 8px;
+                font-size: 0.875rem;
+                font-weight: 500;
+                color: var(--text-muted);
+
+                &:hover {
+                    color: var(--text-main);
+                    background: #f3f4f6;
+                }
+
+                &.active {
+                    color: var(--text-main);
+                    background: #f3f4f6;
+                }
+            }
+        }
+
+        .btn-signin {
+            padding: 0.5rem 1.25rem;
+            background: #000;
+            color: white;
+            border-radius: 999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+
+            &:hover {
+                background: #333;
+            }
+        }
     }
 }
 
-.tabs {
-    display: flex;
-    background: white;
-    border-bottom: 2px solid #e1e8ed;
-
-    button {
-        flex: 1;
-        padding: 1rem 2rem;
-        font-weight: 500;
-        color: #7f8c8d;
-        transition: all 0.3s;
-
-        &:hover {
-            background: #f8f9fa;
-        }
-
-        &.active {
-            color: #667eea;
-            border-bottom: 3px solid #667eea;
-        }
-    }
-}
-
-.main {
+.main-content {
     flex: 1;
-    max-width: 1200px;
-    width: 100%;
-    margin: 0 auto;
-    padding: 2rem;
+}
+
+.footer {
+    border-top: 1px solid var(--border-color);
+    padding: 2rem 1.5rem;
+    
+    .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 0.875rem;
+    }
 }

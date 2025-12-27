@@ -1,36 +1,67 @@
 import { useState } from "react";
 import TestSection from "./components/TestSection";
 import ProxySection from "./components/ProxySection";
+import HeroSection from "./components/HeroSection";
 import "./styles/App.scss";
 
 export default function App() {
-    const [activeTab, setActiveTab] = useState<"test" | "proxy">("test");
+    const [page, setPage] = useState<"hero" | "test" | "proxy">("hero");
+
+    const renderPage = () => {
+        switch (page) {
+            case "hero":
+                return <HeroSection onGetStarted={() => setPage("test")} />;
+            case "test":
+                return <TestSection />;
+            case "proxy":
+                return <ProxySection />;
+            default:
+                return <HeroSection onGetStarted={() => setPage("test")} />;
+        }
+    };
 
     return (
         <div className="app">
-            <header className="header">
-                <h1>UDT</h1>
-                <p>Universal Data Translator</p>
-            </header>
-
-            <nav className="tabs">
-                <button
-                    className={activeTab === "test" ? "active" : ""}
-                    onClick={() => setActiveTab("test")}
-                >
-                    Protocol Playground
-                </button>
-                <button
-                    className={activeTab === "proxy" ? "active" : ""}
-                    onClick={() => setActiveTab("proxy")}
-                >
-                    Proxy API
-                </button>
+            <nav className="navbar">
+                <div className="navbar-container">
+                    <div className="logo" onClick={() => setPage("hero")}>
+                        UDT
+                    </div>
+                    <div className="nav-links">
+                        <button
+                            className={page === "hero" ? "active" : ""}
+                            onClick={() => setPage("hero")}
+                        >
+                            Home
+                        </button>
+                        <button
+                            className={page === "test" ? "active" : ""}
+                            onClick={() => setPage("test")}
+                        >
+                            Playground
+                        </button>
+                        <button
+                            className={page === "proxy" ? "active" : ""}
+                            onClick={() => setPage("proxy")}
+                        >
+                            Proxy API
+                        </button>
+                    </div>
+                    <div className="nav-actions">
+                        <button className="btn-signin">Sign in</button>
+                    </div>
+                </div>
             </nav>
 
-            <main className="main">
-                {activeTab === "test" ? <TestSection /> : <ProxySection />}
+            <main className="main-content">
+                {renderPage()}
             </main>
+
+            <footer className="footer">
+                <div className="footer-content">
+                    <p>© 2025 UDT. All rights reserved.</p>
+                </div>
+            </footer>
         </div>
     );
 }
